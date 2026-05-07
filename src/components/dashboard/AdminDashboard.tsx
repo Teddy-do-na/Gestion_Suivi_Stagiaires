@@ -119,9 +119,9 @@ const AdminDashboard: React.FC = () => {
       {/* KPI Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <StatCard title="Stagiaires" value={stats.totalInterns} icon={Users} color="blue" />
-        <StatCard title="Stages Totaux" value={stats.totalStages} icon={FileText} color="green" />
+        <StatCard title="Stages" value={stats.totalStages} icon={FileText} color="green" />
         <StatCard title="Directions" value={stats.totalDirections} icon={Building2} color="orange" />
-        <StatCard title="Comptes Utilisateurs" value={stats.totalUsers} icon={ShieldAlert} color="red" />
+        <StatCard title="Comptes" value={stats.totalUsers} icon={ShieldAlert} color="red" />
       </div>
 
       {/* Quick Actions for Admins/IT/HR */}
@@ -155,7 +155,7 @@ const AdminDashboard: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Chart */}
-        <div className="lg:col-span-2 bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <div className="lg:col-span-2 bg-white p-4 lg:p-6 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-8">
             <h3 className="text-xl font-bold text-gray-900">Évolution des Admissions</h3>
             <div className="flex space-x-2">
@@ -185,7 +185,7 @@ const AdminDashboard: React.FC = () => {
         </div>
 
         {/* Status Distribution */}
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+        <div className="bg-white p-4 lg:p-6 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
           <h3 className="text-xl font-bold text-gray-900 mb-8">Répartition des Stages</h3>
           <div className="h-64 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -221,7 +221,7 @@ const AdminDashboard: React.FC = () => {
 
       {/* Audit Log / Recent Action Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden">
+        <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-full -mr-16 -mt-16 opacity-50"></div>
           <div className="relative z-10">
             <div className="flex items-center justify-between mb-6">
@@ -262,7 +262,7 @@ const AdminDashboard: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+        <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-xl font-bold text-gray-900">Indicateurs par Direction</h3>
             <div className="p-2 bg-slate-50 rounded-lg">

@@ -23,6 +23,7 @@ import { useLocation } from 'react-router-dom';
 const DashboardLayout: React.FC = () => {
   const { profile, logout } = useAuth();
   const [isSidebarOpen, setSidebarOpen] = useState(true);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -61,12 +62,21 @@ const DashboardLayout: React.FC = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 overflow-hidden">
+    <div className="flex h-screen bg-gray-50 overflow-hidden relative">
+      {/* Mobile Backdrop */}
+      {isMobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-slate-900/50 z-30 lg:hidden backdrop-blur-sm"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Sidebar */}
       <aside 
         className={cn(
-          "bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-20 flex flex-col",
-          isSidebarOpen ? "w-64" : "w-20"
+          "fixed inset-y-0 left-0 lg:relative bg-white border-r border-gray-200 transition-all duration-300 ease-in-out z-40 flex flex-col shadow-xl lg:shadow-none",
+          isSidebarOpen ? "w-64" : "w-20",
+          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
         <div className="p-6 flex items-center justify-between">
@@ -100,9 +110,15 @@ const DashboardLayout: React.FC = () => {
           )}
           <button 
             onClick={() => setSidebarOpen(!isSidebarOpen)}
-            className="p-1 rounded-md hover:bg-gray-100 text-gray-500"
+            className="p-1 rounded-md hover:bg-gray-100 text-gray-500 hidden lg:block"
           >
             {isSidebarOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+          <button 
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="p-1 rounded-md hover:bg-gray-100 text-gray-500 lg:hidden"
+          >
+            <X size={24} />
           </button>
         </div>
 
@@ -111,6 +127,7 @@ const DashboardLayout: React.FC = () => {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={() => setIsMobileMenuOpen(false)}
               className={({ isActive }) => {
                 const isItemActive = isActive && (item.path.includes('tab') ? location.search === item.path.split('?')[1] : location.search === '');
                 return cn(
@@ -153,17 +170,25 @@ const DashboardLayout: React.FC = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 flex flex-col overflow-hidden">
-        <header className="h-16 bg-white border-b border-gray-200 flex items-center px-8 justify-between z-10 shrink-0">
-          <h1 className="text-xl font-bold text-slate-900">
-            {getCurrentPageName()}
-          </h1>
+      <main className="flex-1 flex flex-col overflow-hidden w-full">
+        <header className="h-16 bg-white border-b border-gray-200 flex items-center px-4 lg:px-8 justify-between z-10 shrink-0">
+          <div className="flex items-center space-x-3">
+            <button 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 -ml-2 rounded-md hover:bg-gray-100 text-gray-500 lg:hidden"
+            >
+              <Menu size={24} />
+            </button>
+            <h1 className="text-lg lg:text-xl font-bold text-slate-900 truncate">
+              {getCurrentPageName()}
+            </h1>
+          </div>
           <div className="flex items-center space-x-4">
-            <span className="text-sm text-gray-500">{new Date().toLocaleDateString('fr-FR')}</span>
+            <span className="text-xs lg:text-sm text-gray-500 hidden sm:block">{new Date().toLocaleDateString('fr-FR')}</span>
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto p-8">
+        <div className="flex-1 overflow-y-auto p-4 lg:p-8">
           <Outlet />
         </div>
       </main>

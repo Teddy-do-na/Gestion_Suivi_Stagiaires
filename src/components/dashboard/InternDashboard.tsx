@@ -170,7 +170,7 @@ const InternDashboard: React.FC = () => {
               ) : (
                 <>
                   {/* Submission Form */}
-                  <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+                  <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
                     <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center tracking-tight">
                       <div className="p-2 bg-blue-50 rounded-lg mr-3">
                         <Send size={20} className="text-blue-600" />
@@ -211,7 +211,7 @@ const InternDashboard: React.FC = () => {
                     </div>
                     {activities.length > 0 ? (
                       activities.map((act) => (
-                        <div key={act.id} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
+                        <div key={act.id} className="bg-white p-4 lg:p-6 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow group">
                           <div className="flex justify-between items-start mb-4">
                             <h4 className="font-bold text-gray-900 text-lg">{act.title}</h4>
                             <span className={cn(
@@ -254,7 +254,7 @@ const InternDashboard: React.FC = () => {
                   {tasks.length > 0 ? (
                     <div className="grid grid-cols-1 gap-4">
                       {tasks.map((task) => (
-                        <div key={task.id} className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+                        <div key={task.id} className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-[2.5rem] border border-gray-100 shadow-sm">
                           <div className="flex justify-between items-start mb-4">
                             <div>
                               <h4 className="text-xl font-bold text-gray-900 mb-1">{task.title}</h4>
@@ -311,7 +311,7 @@ const InternDashboard: React.FC = () => {
           )}
 
           {activeTab === 'profile' && (
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
               <h3 className="text-2xl font-black text-gray-900 mb-8 tracking-tight">Mon Dossier Stagiaire</h3>
               
               <form onSubmit={handleUpdateProfile} className="space-y-8">
@@ -373,7 +373,7 @@ const InternDashboard: React.FC = () => {
           )}
 
           {activeTab === 'messages' && (
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
               <h3 className="text-2xl font-black text-gray-900 mb-2 tracking-tight flex items-center">
                 <MessageSquare size={24} className="mr-3 text-blue-600" />
                 Remarques du Tuteur
@@ -414,7 +414,7 @@ const InternDashboard: React.FC = () => {
           )}
 
           {activeTab === 'documents' && (
-            <div className="bg-white p-8 rounded-3xl border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-3xl border border-gray-100 shadow-sm">
               <h3 className="text-2xl font-black text-gray-900 mb-2 tracking-tight">Espace Documents</h3>
               <p className="text-gray-500 mb-8 font-medium">Téléchargez vos attestations et rapports validés.</p>
               
@@ -441,7 +441,7 @@ const InternDashboard: React.FC = () => {
         </div>
 
         <div className="space-y-6">
-          <div className="bg-gradient-to-br from-blue-700 to-indigo-900 p-8 rounded-[2.5rem] text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-700 to-indigo-900 p-4 lg:p-8 rounded-2xl lg:rounded-[2.5rem] text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full -mr-16 -mt-16"></div>
             <h3 className="text-xl font-bold mb-6 tracking-tight flex items-center">
               <CheckCircle size={20} className="mr-2 text-blue-300" />

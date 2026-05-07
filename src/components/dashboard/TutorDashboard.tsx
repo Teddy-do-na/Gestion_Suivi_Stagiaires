@@ -182,7 +182,7 @@ const TutorDashboard: React.FC = () => {
         <>
           {/* Header Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="group bg-blue-600 rounded-[2rem] p-8 text-white shadow-xl shadow-blue-200 relative overflow-hidden transition-all hover:scale-[1.02]">
+            <div className="group bg-blue-600 rounded-2xl lg:rounded-[2rem] p-4 lg:p-8 text-white shadow-xl shadow-blue-200 relative overflow-hidden transition-all hover:scale-[1.02]">
               <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-150 duration-700"></div>
               <div className="flex justify-between items-start mb-6">
                 <Users size={32} className="opacity-80" />
@@ -192,7 +192,7 @@ const TutorDashboard: React.FC = () => {
               <p className="text-sm font-bold opacity-80 uppercase tracking-widest">Stagiaires suivis</p>
             </div>
 
-            <div className="group bg-white rounded-[2rem] p-8 border border-gray-100 shadow-sm relative overflow-hidden transition-all hover:scale-[1.02]">
+            <div className="group bg-white rounded-2xl lg:rounded-[2rem] p-4 lg:p-8 border border-gray-100 shadow-sm relative overflow-hidden transition-all hover:scale-[1.02]">
               <div className="flex justify-between items-start mb-6">
                 <div className="p-3 bg-emerald-50 rounded-2xl">
                   <CheckCircle size={28} className="text-emerald-500" />
@@ -203,7 +203,7 @@ const TutorDashboard: React.FC = () => {
               <p className="text-sm font-bold text-gray-500 uppercase tracking-widest">Activités en attente</p>
             </div>
 
-            <div className="group bg-slate-900 rounded-[2rem] p-8 text-white shadow-xl relative overflow-hidden transition-all hover:scale-[1.02]">
+            <div className="group bg-slate-900 rounded-2xl lg:rounded-[2rem] p-4 lg:p-8 text-white shadow-xl relative overflow-hidden transition-all hover:scale-[1.02]">
               <div className="flex justify-between items-start mb-6">
                 <div className="p-3 bg-white/10 rounded-2xl">
                   <Star size={28} className="text-yellow-400" />
@@ -217,7 +217,7 @@ const TutorDashboard: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Quick View - Pending Activities */}
-            <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-sm">
+            <div className="bg-white p-4 lg:p-8 rounded-2xl lg:rounded-[2.5rem] border border-gray-100 shadow-sm">
               <div className="flex items-center justify-between mb-8">
                 <h3 className="text-2xl font-black text-gray-900 tracking-tight flex items-center">
                   <ActivityIcon className="mr-3 text-blue-600" size={24} />
@@ -260,7 +260,7 @@ const TutorDashboard: React.FC = () => {
             </div>
 
             {/* Quick View - Interns Progress */}
-            <div className="bg-slate-900 p-8 rounded-[2.5rem] text-white shadow-xl">
+            <div className="bg-slate-900 p-4 lg:p-8 rounded-2xl lg:rounded-[2.5rem] text-white shadow-xl">
               <h3 className="text-2xl font-black mb-8 tracking-tight flex items-center">
                 <TrendingUp className="mr-3 text-blue-400" size={24} />
                 Mes Stagiaires

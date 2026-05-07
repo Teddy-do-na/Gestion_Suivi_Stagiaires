@@ -66,7 +66,20 @@ Le stagiaire utilise la plateforme pour documenter son apprentissage.
 
 ---
 
-## 5. Support Technique
-En cas de problème :
-1. Vérifiez que vous êtes bien connecté avec le compte Google autorisé.
-2. Pour les erreurs de "Permissions", contactez l'administrateur pour vérifier votre rôle.
+---
+
+## 6. Déploiement et Hébergement
+
+### Déploiement Rapide (AI Studio)
+- Cliquez sur le bouton **"Share"** ou **"Deploy"** dans le coin supérieur droit de l'interface Google AI Studio pour obtenir un lien public instantané.
+
+### Exportation vers GitHub
+1. Allez dans **Settings** > **Export to GitHub**.
+2. Autorisez l'accès à votre compte GitHub si nécessaire.
+3. Le code sera automatiquement poussé vers un nouveau dépôt sur votre compte.
+
+### Hébergement Personnel (Firebase Hosting)
+Si vous souhaitez héberger l'application sur votre propre domaine Firebase :
+1. Installez Firebase CLI : `npm install -g firebase-tools`
+2. Connectez-vous : `firebase login`
+3. Démarrez le déploiement : `firebase deploy` (votre configuration est déjà prête dans le fichier `firebase.json`).

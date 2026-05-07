@@ -14,7 +14,7 @@ const DashboardPage: React.FC = () => {
     <div className="space-y-8 pb-12">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <h2 className="text-3xl font-black text-gray-900 tracking-tight">Bonjour, {profile.displayName} 👋</h2>
+          <h2 className="text-3xl font-black text-gray-900 tracking-tight">Bonjour, {profile.displayName}</h2>
           <p className="text-gray-500 font-medium">Voici le point sur la gestion des stages à l'ENERCA.</p>
         </div>
         <div className="px-4 py-2 bg-white border border-gray-100 rounded-2xl shadow-sm flex items-center">
