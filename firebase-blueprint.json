@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "Base user profile for authentication and role management",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["admin", "hr", "it", "tutor", "intern"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Task": {
+      "title": "Task",
+      "description": "Task assigned to an intern by a tutor",
+      "type": "object",
+      "properties": {
+        "stageId": { "type": "string" },
+        "tutorId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "dueDate": { "type": "string", "format": "date" },
+        "status": { "type": "string", "enum": ["todo", "in_progress", "done"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["stageId", "tutorId", "title", "status"]
+    },
+    "Stagiaire": {
+      "title": "Stagiaire",
+      "description": "Detailed information about an intern",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "nom": { "type": "string" },
+        "prenom": { "type": "string" },
+        "tel": { "type": "string" },
+        "sexe": { "type": "string" },
+        "specialite": { "type": "string" },
+        "niveau": { "type": "string" },
+        "institut": { "type": "string" },
+        "pays": { "type": "string" }
+      },
+      "required": ["userId", "nom", "prenom"]
+    },
+    "Direction": {
+      "title": "Direction",
+      "description": "Department or Direction within ENERCA",
+      "type": "object",
+      "properties": {
+        "numDire": { "type": "string" },
+        "nomDire": { "type": "string" },
+        "nomD": { "type": "string" },
+        "nomDG": { "type": "string" }
+      },
+      "required": ["numDire", "nomDire"]
+    },
+    "Stage": {
+      "title": "Stage",
+      "description": "Internship record",
+      "type": "object",
+      "properties": {
+        "idStagiaire": { "type": "string" },
+        "userId": { "type": "string" },
+        "idTutor": { "type": "string" },
+        "idDirection": { "type": "string" },
+        "dateDebut": { "type": "string", "format": "date" },
+        "dateFin": { "type": "string", "format": "date" },
+        "duree": { "type": "string" },
+        "contrat": { "type": "string" },
+        "theme": { "type": "string" },
+        "type": { "type": "string" },
+        "renouvelable": { "type": "boolean" },
+        "status": { "type": "string", "enum": ["pending", "active", "completed", "cancelled"] }
+      },
+      "required": ["idStagiaire", "idDirection", "dateDebut", "status"]
+    },
+    "Activity": {
+      "title": "Activity",
+      "description": "Activity log entry by an intern",
+      "type": "object",
+      "properties": {
+        "stageId": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "validated"] }
+      },
+      "required": ["stageId", "userId", "title", "date"]
+    },
+    "Evaluation": {
+      "title": "Evaluation",
+      "description": "Intern evaluation by a tutor",
+      "type": "object",
+      "properties": {
+        "stageId": { "type": "string" },
+        "tutorId": { "type": "string" },
+        "note": { "type": "number" },
+        "appreciation": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["stageId", "tutorId", "note"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/interns/{internId}": {
+      "schema": "Stagiaire",
+      "description": "Intern details"
+    },
+    "/directions/{directionId}": {
+      "schema": "Direction",
+      "description": "Directions/Departments"
+    },
+    "/internships/{stageId}": {
+      "schema": "Stage",
+      "description": "Internship records"
+    },
+    "/internships/{stageId}/activities/{activityId}": {
+      "schema": "Activity",
+      "description": "Activity logs for a specific internship"
+    },
+    "/internships/{stageId}/evaluations/{evalId}": {
+      "schema": "Evaluation",
+      "description": "Evaluations for a specific internship"
+    },
+    "/internships/{stageId}/tasks/{taskId}": {
+      "schema": "Task",
+      "description": "Tasks assigned during the internship"
+    }
+  }
+}

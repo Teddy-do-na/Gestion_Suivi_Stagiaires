@@ -1,0 +1,143 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAuth() {
+      return isSignedIn(); // Relaxed from email_verified for now
+    }
+
+    function getUserData() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    }
+
+    function hasRole(role) {
+      return isAuth() && getUserData().role == role;
+    }
+
+    function isAdmin() {
+      return hasRole('admin');
+    }
+
+    function isHR() {
+      return hasRole('hr');
+    }
+
+    function isTutor() {
+      return hasRole('tutor');
+    }
+
+    function isIntern() {
+      return hasRole('intern');
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Users collection
+    match /users/{userId} {
+      allow get: if isSignedIn() && (request.auth.uid == userId || isAdmin() || isHR() || isTutor());
+      allow list: if isAuth() && (isAdmin() || isHR() || isTutor());
+      allow create: if isSignedIn() && request.auth.uid == userId && (
+        !('role' in incoming()) || incoming().role in ['intern', 'tutor', 'hr', 'admin']
+      );
+      allow update: if isAuth() && (
+        (request.auth.uid == userId && incoming().diff(existing()).affectedKeys().hasOnly(['displayName'])) ||
+        (isAdmin() && incoming().diff(existing()).affectedKeys().hasAny(['role', 'status', 'directionId']))
+      );
+    }
+
+    // System Logs
+    match /system_logs/{logId} {
+      allow read: if isAuth() && (isAdmin() || isHR());
+      allow create: if isAuth(); // Any authenticated action can be logged
+    }
+
+    // Directions collection
+    match /directions/{directionId} {
+      allow read: if isAuth();
+      allow write: if isAuth() && (isAdmin() || isHR());
+    }
+
+    // Interns collection
+    match /interns/{internId} {
+      allow read: if isAuth() && (isAdmin() || isHR() || isTutor() || (isSignedIn() && request.auth.uid == existing().userId));
+      allow write: if isAuth() && (isAdmin() || isHR() || isTutor());
+    }
+
+    // Internships (Stages)
+    match /internships/{stageId} {
+      allow get: if isAuth() && (
+        isAdmin() || isHR() || 
+        (isTutor() && request.auth.uid == existing().idTutor) || 
+        (isIntern() && request.auth.uid == existing().userId)
+      );
+      allow list: if isAuth() && (
+        isAdmin() || isHR() || 
+        (isTutor() && request.auth.uid == resource.data.idTutor) || 
+        (isIntern() && request.auth.uid == resource.data.userId)
+      );
+      allow create: if isAuth() && (isAdmin() || isHR());
+      allow update: if isAuth() && (
+        isAdmin() || isHR() || 
+        (isTutor() && request.auth.uid == existing().idTutor && incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+      );
+
+      // Activities
+      match /activities/{activityId} {
+        allow read: if isAuth() && (
+          isAdmin() || isHR() || 
+          (isTutor() && request.auth.uid == get(/databases/$(database)/documents/internships/$(stageId)).data.idTutor) ||
+          (isIntern() && request.auth.uid == existing().userId)
+        );
+        allow create: if isAuth() && isIntern() && request.auth.uid == incoming().userId;
+        allow update: if isAuth() && (
+          (isIntern() && request.auth.uid == existing().userId && incoming().diff(existing()).affectedKeys().hasAny(['title', 'description'])) ||
+          (isTutor() && request.auth.uid == get(/databases/$(database)/documents/internships/$(stageId)).data.idTutor && incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+        );
+      }
+
+      // Evaluations
+      match /evaluations/{evalId} {
+        allow read: if isAuth() && (
+          isAdmin() || isHR() || 
+          (isTutor() && request.auth.uid == existing().tutorId) ||
+          (isIntern() && request.auth.uid == get(/databases/$(database)/documents/internships/$(stageId)).data.userId)
+        );
+        allow write: if isAuth() && isTutor() && request.auth.uid == incoming().tutorId;
+      }
+
+      // Tasks
+      match /tasks/{taskId} {
+        allow read: if isAuth() && (
+          isAdmin() || isHR() || 
+          (isTutor() && request.auth.uid == existing().tutorId) ||
+          (isIntern() && request.auth.uid == get(/databases/$(database)/documents/internships/$(stageId)).data.userId)
+        );
+        allow create: if isAuth() && isTutor() && request.auth.uid == incoming().tutorId;
+        allow update: if isAuth() && (
+          (isTutor() && request.auth.uid == existing().tutorId) ||
+          (isIntern() && request.auth.uid == get(/databases/$(database)/documents/internships/$(stageId)).data.userId && incoming().diff(existing()).affectedKeys().hasOnly(['status']))
+        );
+        allow delete: if isAuth() && (isAdmin() || (isTutor() && request.auth.uid == existing().tutorId));
+      }
+    }
+  }
+}
